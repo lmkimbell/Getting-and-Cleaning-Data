@@ -1,5 +1,6 @@
 ## Getting Data Project
 
+
 ## 1. Merges the training and the test sets to create one data set.
 mergeData <- rbind(read.table("./train/X_train.txt"), read.table("./test/X_test.txt"))
 mergeLabel <- rbind((read.table("./train/y_train.txt")), (read.table("./test/y_test.txt")))
