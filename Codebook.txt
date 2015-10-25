@@ -1,0 +1,34 @@
+Getting and Cleaning Data Project CodeBook
+
+This file describes the variables, the data, and any transformations or work performed to clean up the data.
+	• The site where the data was obtained:http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+SmartphonesThe data for the project:https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+	
+	• Variables:
+		1. mergeData = used to load files into one dataset.  This variable is removed from global environment once data is subset.
+		2. mergeActivity = used to load training and test data for labels into one dataset.  This variable is used in final merging of cleaned dataset to display Activity label.  There are 6 possible labels in the data.
+		3. mergeSubject = used to load training and test data into one source dataset for cleaning activity
+		4. features = Variable used to read ./features.txt file then used to subset data.  This variable is removed from global environment once no longer used in activity.
+		5. meanStdIndices = used to create an index of features t that contain mean and std to subset data.  This variable is removed from global environment once no longer used in activity.
+		6. MeanStdData = used to subset mergeData using meanStdIndices.  The variable mergeData is removed after the creation of this variable.
+		7. activity = used to read ./activity_labels.txt file then used to apply those labels to mergeActivity variable.  This variable is removed once results are applied to activityLabel.
+		8. activityLabel = used as the labels for each row of data once created from the activity variable and the mergeActivity variable.  This variable is removed once results are applied to mergeActivity variable.
+		9. cleanedData = Clean Tidy Dataset of Subject, Activity, and Variables for mean and Standard Diviation
+		10. cleanedGroup = Data Table of summarized cleanedData when all column variables are averaged and grouped by Activity and Subject
+	
+	• The run_analysis.R script performs the following steps to clean the data:
+		1. Read X_train.txt and X_test.txt into mergeData
+		2. Read y_train.txt and y_test.txt into mergeActivity
+		3. Read subject_train.txt and subject_test.txt into mergeSubject
+		4. Read the features.txt file into features
+		5. Create meanStdIndices as a subset of features when mean and std are in the column variable name.
+		6. Subset mergeData into MeanStdData using meanStdIndices
+		7. Read the activity_labels.txt file into activity
+		8. Clean and standardize activity labels to use camel case on labels.
+		9. Clean and standardize header labels of variables in MeanStdData
+		10. Add header names to mergeActivity and mergeSubject
+		11. Remove features, activity, and meanStdIndices from global environment
+		12. Consolidate mergeSubject, mergeActivity and mergeData into one dataset, cleanedData.
+		13. Write output of cleanedData to cleaned_data.txt file.
+		14. Produce mean of variables by Activity and Subject of cleanedData into smaller table cleanedGroup.
+		15. Write output of cleanedGroup to Summary_Data_Means.txt excluding row names.
+
