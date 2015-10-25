@@ -1,14 +1,5 @@
 ## Getting Data Project
 
-fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-f.path <- "UCI HAR Dataset"
-##download.file(fileURL, destfile= paste(f.path,".zip", sep=""))
-rm(fileURL)
-unzip(paste(f.path,".zip", sep=""))
-OrigDir <- getwd()
-NewDir <- paste(OrigDir,"/",f.path, sep="")
-setwd(NewDir)
-
 ## 1. Merges the training and the test sets to create one data set.
 mergeData <- rbind(read.table("./train/X_train.txt"), read.table("./test/X_test.txt"))
 mergeLabel <- rbind((read.table("./train/y_train.txt")), (read.table("./test/y_test.txt")))
@@ -29,7 +20,6 @@ substr(activity[3, 2], 8, 8) <- toupper(substr(activity[3, 2], 8, 8))
 activityLabel <- activity[mergeLabel[, 1], 2]
 mergeLabel[, 1] <- activityLabel
 
-
 ## 4.  Appropriately labels the data set with descriptive variable names. 
 
 names(MeanStdData) <- gsub("\\(\\)", "", features[meanStdIndices, 2]) # remove "()"
@@ -41,16 +31,14 @@ names(mergeSubject) <- "Subject"
 rm(features, activityLabel, meanStdIndices)
 cleanedData <- cbind(mergeSubject, mergeLabel, MeanStdData)
 dim(cleanedData) # 10299*68
-setwd(OrigDir)
+##setwd(OrigDir)
 write.table(cleanedData, "cleaned_data.txt") # write out the 1st dataset
-
 
 ## 5.  From the data set in step 4, creates a second, independent tidy data
 ## set with the average of each variable for each activity and each subject.
 
 cleanedGroup <- cleanedData %>% 
-   group_by(Subject,Activity) %>% 
+   group_by(Activity,Subject) %>% 
    summarize_each(funs(mean))
-
 
 write.table(cleanedGroup, "Summary_Data_Means.txt", row.names = FALSE) # write out the 2nd dataset
